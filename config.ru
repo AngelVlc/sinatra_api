@@ -1,6 +1,7 @@
-require File.expand_path "../app/main.rb", __FILE__
+require "./config/environment"
 
 run Rack::URLMap.new({
   "/" => Public,
-  "/api" => Api,
+  "/health" => Api::V1::Health,
+  "/api" => RootApi,
 })

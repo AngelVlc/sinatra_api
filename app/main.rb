@@ -1,9 +1,8 @@
 require "json"
 require "jwt"
-require "sinatra/base"
 require "./app/jwt_auth"
 
-class Api < Sinatra::Base
+class RootApi < Sinatra::Base
   use JwtAuth
 
   def initialize

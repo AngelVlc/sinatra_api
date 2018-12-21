@@ -10,9 +10,14 @@
 bundle install
 ```
 
-## Start witoout docker
+## Start without docker
 ```
-JWT_SECRET=wadus JWT_ISSUER=wadus rackup
+JWT_SECRET=wadus JWT_ISSUER=wadus bundle exec rackup
+```
+
+## Tests
+```
+bundle exec rspec
 ```
 
 ## Docker
