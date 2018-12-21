@@ -7,3 +7,4 @@ Bundler.require(Sinatra::Base.environment)  # load all the environment specific 
 
 require "./app/main.rb"
 require "./app/api/v1/health.rb"
+require "./app/api/v1/auth.rb"
