@@ -1,0 +1,10 @@
+development: &common_settings
+  jwt_issuer: 'wadus'
+  jwt_secret: 'thejwtsecret'
+  jwt_exp_minutes: 15
+
+test:
+  <<: *common_settings
+
+production:
+  <<: *common_settings
