@@ -6,6 +6,7 @@ gem "jwt"
 gem "json"
 gem "rack"
 gem "activesupport"
+gem "rake"
 
 group :test do
   gem "rspec"

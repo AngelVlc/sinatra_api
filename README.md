@@ -1,11 +1,11 @@
-# SINATRA API WITH JWT AUTH
+# SINATRA API WITH JWT AUTH [![Build Status](https://travis-ci.org/AngelVlc/sinatra_api.svg?branch=master)](https://travis-ci.org/AngelVlc/sinatra_api)
 
 ## Installation
 ```
 bundle install
 ```
 
-## Start without docker
+## Start
 ```
 bundle exec rackup
 ```
@@ -20,6 +20,11 @@ bundle exec rspec
 bundle-audit update
 bundle-audit check
 ```
+
+## Travis
+```
+travis encrypt-file ./config/app.yml
+``
 
 ## Docker
 ```

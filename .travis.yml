@@ -1,0 +1,9 @@
+language: ruby
+rvm:
+- 2.4
+before_install:
+- openssl aes-256-cbc -K $encrypted_1d2f95737f1f_key -iv $encrypted_1d2f95737f1f_iv
+  -in config/app.yml.enc -out config/app.yml -d
+script:
+- "bundle exec bundle-audit update && bundle exec bundle-audit check"
+- "bundle exec rake spec"
