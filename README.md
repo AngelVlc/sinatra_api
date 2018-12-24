@@ -22,9 +22,15 @@ bundle-audit check
 ```
 
 ## Travis
+To encrypt config/app.yml:
 ```
 travis encrypt-file ./config/app.yml
-``
+```
+
+To encrypt the heroku api key:
+```
+travis encrypt heroku_api_key -r AngelVlc/sinatra_api
+```
 
 ## Docker
 ```
