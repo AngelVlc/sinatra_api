@@ -11,3 +11,7 @@ group :test do
   gem "rspec"
   gem "rack-test"
 end
+
+group :development, :test do
+  gem "bundle-audit"
+end

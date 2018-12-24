@@ -15,6 +15,12 @@ bundle exec rackup
 bundle exec rspec
 ```
 
+## Bundle audit
+```
+bundle-audit update
+bundle-audit check
+```
+
 ## Docker
 ```
 API_PORT=2900 docker-compose up
