@@ -9,6 +9,7 @@ gem "puma", "~>3.12"
 gem "foreman", "~>0.64.0"
 gem "activesupport", "~>5.2.2"
 gem "rake", "~>12.3.2"
+gem "sentry-raven", "~>2.7.4"
 
 group :test do
   gem "rspec"
