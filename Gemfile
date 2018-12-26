@@ -5,6 +5,8 @@ gem "sinatra-contrib"
 gem "jwt"
 gem "json"
 gem "rack"
+gem "puma"
+gem "foreman"
 gem "activesupport"
 gem "rake"
 
