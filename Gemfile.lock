@@ -69,18 +69,18 @@ PLATFORMS
   x64-mingw32
 
 DEPENDENCIES
-  activesupport
+  activesupport (~> 5.2.2)
   bundle-audit
-  foreman
-  json
-  jwt
-  puma
-  rack
+  foreman (~> 0.64.0)
+  json (~> 2.1.0)
+  jwt (~> 2.1.0)
+  puma (~> 3.12)
+  rack (~> 2.0.6)
   rack-test
-  rake
+  rake (~> 12.3.2)
   rspec
-  sinatra
-  sinatra-contrib
+  sinatra (~> 2.0.4)
+  sinatra-contrib (~> 2.0.4)
 
 BUNDLED WITH
    1.17.2
