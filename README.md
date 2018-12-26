@@ -7,7 +7,7 @@ bundle install
 
 ## Start
 ```
-bundle exec rackup
+foreman start
 ```
 
 ## Tests
