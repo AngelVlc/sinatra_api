@@ -6,12 +6,12 @@ Bundler.require(:default)                   # load all the default gems
 Bundler.require(Sinatra::Base.environment)  # load all the environment specific gems
 require "sinatra/config_file"
 
-require "./app/services/auth.rb"
-require "./app/services/jwt_auth.rb"
+APP_ROOT = File.expand_path("..", __dir__)
 
-require "./app/api/v1/health.rb"
-require "./app/api/v1/auth.rb"
-require "./app/api/v1/secure.rb"
+Dir.glob(File.join(APP_ROOT, "app", "models", "*.rb")).each { |file| require file }
+Dir.glob(File.join(APP_ROOT, "app", "services", "*.rb")).each { |file| require file }
+
+Dir.glob(File.join(APP_ROOT, "app", "api", "v1", "*.rb")).each { |file| require file }
 
 require "./config/reader.rb"
 

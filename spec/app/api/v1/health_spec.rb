@@ -12,4 +12,11 @@ describe "Health API" do
     expect(JSON.parse(last_response.body)).to eq({"status" => true})
     expect(last_response.status).to eq(200)
   end
+
+  it "users count should be 0" do
+    get "/userscount"
+
+    expect(JSON.parse(last_response.body)).to eq({"count" => 0})
+    expect(last_response.status).to eq(200)
+  end
 end

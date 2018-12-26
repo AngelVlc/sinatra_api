@@ -1,17 +1,25 @@
 language: ruby
 rvm:
 - 2.4
+services:
+  - mysql
 before_install:
-- openssl aes-256-cbc -K $encrypted_1d2f95737f1f_key -iv $encrypted_1d2f95737f1f_iv
-  -in config/app.yml.enc -out config/app.yml -d
+- openssl aes-256-cbc -K $encrypted_1d2f95737f1f_key -iv $encrypted_1d2f95737f1f_iv -in config/app.yml.enc -out config/app.yml -d
+- openssl aes-256-cbc -K $encrypted_dee5a0b392fa_key -iv $encrypted_dee5a0b392fa_iv -in config/database.yml.enc -out ./config/database.yml -d
 script:
 - bundle exec bundle-audit update && bundle exec bundle-audit check
+- RACK_ENV=test bundle exec rake db:create
+- RACK_ENV=test bundle exec rake db:migrate
 - bundle exec rake spec
 before_deploy:
 - git add -f config/app.yml
-- git commit -m "Adds app.yml"
+- git add -f config/database.yml
+- git commit -m "Adds config files"
 deploy:
   provider: heroku
   app: sinatraapi
   api_key:
     secure: "iJ9yjc5DYksAQh65hexGOZhFz5yXuLGGpfBVUeefl4cHmHUAFln3TMa6c4uP5ZHnf/hLw4DcGqhknE954w5bCNbOAFkrZiElF0QD5he3AwxI60Yd2ZZSJjQPj61rjlfLlbwbRLSOn2pdouokaPpZbA5jH+D9Lxy0Q302OhN6ZXhsYVMQ/5De3FTOoGSyyEsSYOl64wekYAktQFrBGwlXLtRc6WVdQ0QIvFM2ai43mL1EzfBeJZmOzq9h5wB2z2sDwVOJBMRNiv6Q/1Uk/fGHznoKxRDlJ/Xe0hoGSnuWp7JjYohOxkyOOhIRwSrFGbZ5V+F0EKgfq0s4V2KvxShILd+tSJK4w7fRCYp/UUj0kuc7FYZhmfrQETXtAh5QBSRN7tOOe3lxv4QRu3mCH0I9Un6ldJJadXwTZfOEwlCWy9qIdw/ZXc4OGA8ijEzSqcNhFQc1j4kpjOGd2NgnkHim8d1+4Zs5iXi5bdozL6mJFVBhUM2fdrAWfnU3H6nyb/DCvAm77d5lw5uKd/muIfPgWYsEOjObZct/2tCu25w7C+5aH+IO9fksq/1yQQ5/EZK4g0vh88CCCVKKnsrYQWr88ZtkF6/hPPGlk2O4Q7qnwqFcz5gcSpUjHdf5CWxdybg2YpaNDr8Gmdnv2pHDQ8Eo6KyPOeR8wlKK0ZaCgb4OjFo="
+after_deploy:
+- RACK_ENV=production rake db:create
+- RACK_ENV=production rake db:migrate
