@@ -2,6 +2,7 @@ development: &common_settings
   jwt_issuer: 'wadus'
   jwt_secret: 'thejwtsecret'
   jwt_exp_minutes: 15
+  sentry_dsn: https://wadus:wadus@sentry.io/1392
 
 test:
   <<: *common_settings

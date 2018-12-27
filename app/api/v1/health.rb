@@ -12,6 +12,10 @@ module Api
         content_type :json
         {count: User.count}.to_json
       end
+
+      get "/sentry" do
+        raise StandardError, "testing sentry"
+      end
     end
   end
 end

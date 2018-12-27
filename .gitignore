@@ -50,5 +50,6 @@ build-iPhoneSimulator/
 .rvmrc
 
 /config/*.yml
+/config/configs.tar
 
 .env

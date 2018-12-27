@@ -12,36 +12,33 @@ foreman start
 
 ## Tests
 ```
-bundle exec rspec
+make tests
 ```
 
 ## Console
 ```
-bundle exec ruby script/console
+make console
 ```
 
 ## Bundle audit
 ```
-bundle-audit update
-bundle-audit check
+make bundle_audit
 ```
 
 ## Travis
 To encrypt config files:
 ```
-travis encrypt-file ./config/app.yml
-travis encrypt-file ./config/database.yml
+make encrypt_configs
 ```
 
-To encrypt the heroku api key:
-```
-travis encrypt heroku_api_key -r AngelVlc/sinatra_api
-```
-
-## Docker
+## Docker for development db
 ```
 docker run --name sinatra-mysql -e MYSQL_ROOT_PASSWORD=password -p 3306:3306 -d mysql
-docker run --name sinatra-postgres -e POSTGRES_PASSWORD=password -p 5432:5432 -d postgres
+```
+
+## Sentry config for heroku
+```
+heroku labs:enable runtime-dyno-metadata -a <app name>
 ```
 
 ## Links
