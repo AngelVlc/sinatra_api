@@ -13,6 +13,7 @@ gem "sentry-raven", "~>2.7.4"
 gem "activerecord", "~>5.2.2"
 gem "sinatra-activerecord", "~>2.0.13"
 gem "bcrypt", "~>3.1.12"
+gem "rack-protection", "~>2.0.5"
 
 group :test do
   gem "rspec", "~>3.8.0"
