@@ -1,5 +1,11 @@
 # SINATRA API WITH JWT AUTH [![Build Status](https://travis-ci.org/AngelVlc/sinatra_api.svg?branch=master)](https://travis-ci.org/AngelVlc/sinatra_api)
 
+## Characteristics
+
+- Travis CI/CD: tests, bundle audit and deploy to heroku
+- Sentry error tracking
+- Rack protection
+
 ## Installation
 ```
 bundle install
