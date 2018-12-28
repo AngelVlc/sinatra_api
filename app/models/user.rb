@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   include BCrypt
 
-  validates_presence_of :username
+  validates_presence_of :user_name
   validates_presence_of :password_digest
 
   def password
