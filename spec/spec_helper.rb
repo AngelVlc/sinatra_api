@@ -1,7 +1,19 @@
 ENV["RACK_ENV"] = "test"
 
 require "./config/environment"
+require "coveralls"
+require 'simplecov'
+require 'simplecov-console'
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
+
+Coveralls.wear!
+
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new(
+  [
+    SimpleCov::Formatter::Console
+  ]
+)
+SimpleCov.start
 
 ActiveRecord::Migration.maintain_test_schema!
 

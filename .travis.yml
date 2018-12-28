@@ -10,7 +10,8 @@ script:
   - bundle exec bundle-audit update && bundle exec bundle-audit check
   - RACK_ENV=test bundle exec rake db:create
   - RACK_ENV=test bundle exec rake db:migrate
-  - bundle exec rake spec
+  - bundle exec rspec
+  - bundle exec rake coveralls:push
 before_deploy:
   - git add -f config/app.yml
   - git add -f config/database.yml

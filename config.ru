@@ -16,4 +16,4 @@ if ENV["RACK_ENV"] == "production"
   use Raven::Rack
 end
 
-use Rack::Protection
+use Rack::Protection, :except => [:session_hijacking, :remote_token]
