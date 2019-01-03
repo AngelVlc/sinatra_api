@@ -27,6 +27,7 @@ end
 group :development, :test do
   gem "bundle-audit", "~>0.1.0"
   gem "mysql2", "~>0.5.2"
+  gem "factory_bot", "~>4.11.1"
 end
 
 group :production do

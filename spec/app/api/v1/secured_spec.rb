@@ -7,7 +7,8 @@ describe "Secure API" do
 
   context "test" do
     it "should return 200 if the token is valid" do
-      valid_token = Services::Auth.token("wadus", ["test"])
+      user = create(:user)
+      valid_token = Services::Auth.token(user)
 
       header "Authorization", "Bearer #{valid_token}"
       get "/test"
@@ -29,13 +30,14 @@ describe "Secure API" do
     end
 
     it "should return 403 if the token has expired" do
-      payload = Services::Auth.payload_for("wadus", ["test"])
+      user = create(:user)
+      payload = Services::Auth.payload_for(user)
 
       payload[:exp] = Time.now - 100
 
-      allow(Services::Auth).to receive(:payload_for).with("wadus", ["test"]).and_return(payload)
+      allow(Services::Auth).to receive(:payload_for).with(user).and_return(payload)
 
-      expired_token = Services::Auth.token("wadus", ["test"])
+      expired_token = Services::Auth.token(user)
 
       header "Authorization", "Bearer #{expired_token}"
       get "/test"
@@ -44,13 +46,14 @@ describe "Secure API" do
     end
     
     it "should return 403 if the token issuer is not valid" do
-      payload = Services::Auth.payload_for("wadus", ["test"])
+      user = create(:user)
+      payload = Services::Auth.payload_for(user)
 
       payload[:iss] = "invalid_issuer"
 
-      allow(Services::Auth).to receive(:payload_for).with("wadus", ["test"]).and_return(payload)
+      allow(Services::Auth).to receive(:payload_for).with(user).and_return(payload)
 
-      invalid_token = Services::Auth.token("wadus", ["test"])
+      invalid_token = Services::Auth.token(user)
 
       header "Authorization", "Bearer #{invalid_token}"
       get "/test"
@@ -59,13 +62,14 @@ describe "Secure API" do
     end
 
     it "should return 403 if the token iat is not valid" do
-      payload = Services::Auth.payload_for("wadus", ["test"])
+      user = create(:user)
+      payload = Services::Auth.payload_for(user)
 
       payload[:iat] = Time.now - 100
 
-      allow(Services::Auth).to receive(:payload_for).with("wadus", ["test"]).and_return(payload)
+      allow(Services::Auth).to receive(:payload_for).with(user).and_return(payload)
 
-      invalid_token = Services::Auth.token("wadus", ["test"])
+      invalid_token = Services::Auth.token(user)
 
       header "Authorization", "Bearer #{invalid_token}"
       get "/test"

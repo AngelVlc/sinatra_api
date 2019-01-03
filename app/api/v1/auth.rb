@@ -8,8 +8,10 @@ module Api
         user_name = params[:user_name]
         password = params[:password]
 
-        if Services::Auth.user_is_valid(user_name, password)
-          token = Services::Auth.token(user_name, [])
+        found_user = Services::Auth.user_authenticated?(user_name, password)
+
+        if found_user
+          token = Services::Auth.token(found_user)
           content_type :json
           {token: token}.to_json
         else

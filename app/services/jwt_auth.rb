@@ -9,7 +9,7 @@ module Services
     def call(env)
       begin
         bearer = env.fetch("HTTP_AUTHORIZATION", "").slice(7..-1)
-        payload, header = Services::Auth.decode(bearer)
+        payload = Services::Auth.decode(bearer)
 
         env[:scopes] = payload["scopes"]
         env[:user] = payload["user"]

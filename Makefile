@@ -12,3 +12,12 @@ tests:
 
 console:
 	bundle exec ruby script/console
+
+test_console:
+	RACK_ENV=test exec ruby script/console
+
+migrate_dev:
+	bundle exec rake rake db:migrate
+
+migrate_test:
+	RACK_ENV=test bundle exec rake db:migrate
