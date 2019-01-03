@@ -8,7 +8,7 @@ describe "Secure API" do
   context "test" do
     it "should return 200 if the token is valid" do
       user = create(:user)
-      valid_token = Services::Auth.token(user)
+      valid_token = Services::Auth.token(user.user_name, user.scopes_array)
 
       header "Authorization", "Bearer #{valid_token}"
       get "/test"
@@ -31,13 +31,13 @@ describe "Secure API" do
 
     it "should return 403 if the token has expired" do
       user = create(:user)
-      payload = Services::Auth.payload_for(user)
+      payload = Services::Auth.payload_for(user.user_name, user.scopes_array)
 
       payload[:exp] = Time.now - 100
 
-      allow(Services::Auth).to receive(:payload_for).with(user).and_return(payload)
+      allow(Services::Auth).to receive(:payload_for).with(user.user_name, user.scopes_array).and_return(payload)
 
-      expired_token = Services::Auth.token(user)
+      expired_token = Services::Auth.token(user.user_name, user.scopes_array)
 
       header "Authorization", "Bearer #{expired_token}"
       get "/test"
@@ -47,13 +47,13 @@ describe "Secure API" do
     
     it "should return 403 if the token issuer is not valid" do
       user = create(:user)
-      payload = Services::Auth.payload_for(user)
+      payload = Services::Auth.payload_for(user.user_name, user.scopes_array)
 
       payload[:iss] = "invalid_issuer"
 
-      allow(Services::Auth).to receive(:payload_for).with(user).and_return(payload)
+      allow(Services::Auth).to receive(:payload_for).with(user.user_name, user.scopes_array).and_return(payload)
 
-      invalid_token = Services::Auth.token(user)
+      invalid_token = Services::Auth.token(user.user_name, user.scopes_array)
 
       header "Authorization", "Bearer #{invalid_token}"
       get "/test"
@@ -63,13 +63,13 @@ describe "Secure API" do
 
     it "should return 403 if the token iat is not valid" do
       user = create(:user)
-      payload = Services::Auth.payload_for(user)
+      payload = Services::Auth.payload_for(user.user_name, user.scopes_array)
 
       payload[:iat] = Time.now - 100
 
-      allow(Services::Auth).to receive(:payload_for).with(user).and_return(payload)
+      allow(Services::Auth).to receive(:payload_for).with(user.user_name, user.scopes_array).and_return(payload)
 
-      invalid_token = Services::Auth.token(user)
+      invalid_token = Services::Auth.token(user.user_name, user.scopes_array)
 
       header "Authorization", "Bearer #{invalid_token}"
       get "/test"

@@ -9,9 +9,9 @@ describe "Auth API" do
   context "login" do
     let(:user_name) { "wadus" }
     let(:password) { "pass" }
+    let(:user) { User.new(user_name: user_name, password: password) }
 
     it "should return a token when the user is valid" do
-      user = create(:user, password: password)
       allow(Services::Auth).to receive(:user_authenticated?).with(user_name, password).and_return(user)
       
       post "/login", { user_name: user_name, password: password }
@@ -23,7 +23,7 @@ describe "Auth API" do
     end
 
     it "should return a 401 when the user is not valid" do
-      allow(Services::Auth).to receive(:user_authenticated?).with(user_name, password).and_return(nil)
+      allow(Services::Auth).to receive(:user_authenticated?).with(user.user_name, password).and_return(nil)
       
       post "/login", { user_name: user_name, password: password }
 

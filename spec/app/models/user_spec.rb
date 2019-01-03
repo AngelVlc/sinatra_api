@@ -1,16 +1,16 @@
 require "spec_helper"
 
 describe "User model" do
-  it "it's not possible to create a user without user name" do
+  it "it's not possible to save a user without user name" do
     user = User.new
 
-    expect(user.save).to be(false)
+    expect(user.valid?).to be(false)
   end
 
-  it "it's not possible to create a user without password" do
+  it "it's not possible to save a user without password" do
     user = User.new(user_name: "wadus")
 
-    expect(user.save).to be(false)
+    expect(user.valid?).to be(false)
   end
 
   it "should encrypt the password" do
@@ -33,7 +33,7 @@ describe "User model" do
 
     another_user = User.new(user_name: user.user_name)
 
-    expect(another_user.save).to be(false)
+    expect(another_user.valid?).to be(false)
   end
 
   context "find_by_user_name" do

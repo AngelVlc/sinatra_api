@@ -3,20 +3,20 @@ require "jwt"
 module Services
   class Auth
     class << self
-      def payload_for(user)
+      def payload_for(user_name, scopes)
         {
           exp: Time.now.to_i + ConfigReader.get(:jwt_exp_minutes) * 60,
           iat: Time.now.to_i,
           iss: ConfigReader.get(:jwt_issuer),
-          scopes: user.scopes_array,
+          scopes: scopes,
           user: {
-            user_name: user.user_name,
-          },
+            user_name: user_name
+          }
         }
       end
 
-      def token(user)
-        JWT.encode payload_for(user), ConfigReader.get(:jwt_secret), "HS256"
+      def token(user_name, scopes)
+        JWT.encode payload_for(user_name, scopes), ConfigReader.get(:jwt_secret), "HS256"
       end
 
       def decode(token)
