@@ -5,9 +5,15 @@ describe "Secure API" do
     Api::V1::Secure
   end
 
+  let(:user_name) { "wadus" }
+  let(:password) { "pass" }
+  let(:user) { User.new(user_name: user_name, password: password) }
+
   context "test" do
     it "should return 200 if the token is valid" do
-      user = create(:user)
+      allow(Services::Auth).to receive(:user_authenticated?).with(user_name, password).and_return(user)
+      allow_any_instance_of(User).to receive(:scopes_array).with(no_args).and_return(["test"])
+
       valid_token = Services::Auth.token(user.user_name, user.scopes_array)
 
       header "Authorization", "Bearer #{valid_token}"
@@ -30,7 +36,6 @@ describe "Secure API" do
     end
 
     it "should return 403 if the token has expired" do
-      user = create(:user)
       payload = Services::Auth.payload_for(user.user_name, user.scopes_array)
 
       payload[:exp] = Time.now - 100
@@ -46,7 +51,6 @@ describe "Secure API" do
     end
     
     it "should return 403 if the token issuer is not valid" do
-      user = create(:user)
       payload = Services::Auth.payload_for(user.user_name, user.scopes_array)
 
       payload[:iss] = "invalid_issuer"
@@ -62,7 +66,6 @@ describe "Secure API" do
     end
 
     it "should return 403 if the token iat is not valid" do
-      user = create(:user)
       payload = Services::Auth.payload_for(user.user_name, user.scopes_array)
 
       payload[:iat] = Time.now - 100
