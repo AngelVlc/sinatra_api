@@ -7,28 +7,27 @@ describe "Secure API" do
 
   let(:user_name) { "wadus" }
   let(:password) { "pass" }
-  let(:user) { User.new(user_name: user_name, password: password) }
 
   context "test" do
-    it "should return 200 if the token is valid" do
-      allow(Services::Auth).to receive(:user_authenticated?).with(user_name, password).and_return(user)
-      allow_any_instance_of(User).to receive(:scopes_array).with(no_args).and_return(["test"])
+    before(:each) do
+    end
 
-      valid_token = Services::Auth.token(user.user_name, user.scopes_array)
+    it "should return 200 if the token is valid" do
+      valid_token = AuthHelper.valid_token(user_name, ["test"])
 
       header "Authorization", "Bearer #{valid_token}"
       get "/test"
 
       expect(last_response.status).to eq(200)
     end
-    
+
     it "should return 401 if the token is not valid" do
       header "Authorization", "Bearer invalid_token"
       get "/test"
-      
+
       expect(last_response.status).to eq(401)
     end
-    
+
     it "should return 401 if the token has not been provided" do
       get "/test"
 
@@ -36,28 +35,20 @@ describe "Secure API" do
     end
 
     it "should return 403 if the token has expired" do
-      payload = Services::Auth.payload_for(user.user_name, user.scopes_array)
+      allow(Services::Auth).to receive(:payload_for).with(user_name, []).and_return(expired_payload)
 
-      payload[:exp] = Time.now - 100
-
-      allow(Services::Auth).to receive(:payload_for).with(user.user_name, user.scopes_array).and_return(payload)
-
-      expired_token = Services::Auth.token(user.user_name, user.scopes_array)
+      expired_token = Services::Auth.token(user_name, [])
 
       header "Authorization", "Bearer #{expired_token}"
       get "/test"
 
       expect(last_response.status).to eq(403)
     end
-    
+
     it "should return 403 if the token issuer is not valid" do
-      payload = Services::Auth.payload_for(user.user_name, user.scopes_array)
+      allow(Services::Auth).to receive(:payload_for).with(user_name, []).and_return(invalid_issuer_payload)
 
-      payload[:iss] = "invalid_issuer"
-
-      allow(Services::Auth).to receive(:payload_for).with(user.user_name, user.scopes_array).and_return(payload)
-
-      invalid_token = Services::Auth.token(user.user_name, user.scopes_array)
+      invalid_token = Services::Auth.token(user_name, [])
 
       header "Authorization", "Bearer #{invalid_token}"
       get "/test"
@@ -66,18 +57,30 @@ describe "Secure API" do
     end
 
     it "should return 403 if the token iat is not valid" do
-      payload = Services::Auth.payload_for(user.user_name, user.scopes_array)
+      allow(Services::Auth).to receive(:payload_for).with(user_name, []).and_return(expired_iat_payload)
 
-      payload[:iat] = Time.now - 100
-
-      allow(Services::Auth).to receive(:payload_for).with(user.user_name, user.scopes_array).and_return(payload)
-
-      invalid_token = Services::Auth.token(user.user_name, user.scopes_array)
+      invalid_token = Services::Auth.token(user_name, [])
 
       header "Authorization", "Bearer #{invalid_token}"
       get "/test"
 
       expect(last_response.status).to eq(403)
+    end
+
+    def payload
+      Services::Auth.payload_for(user_name, [])
+    end
+
+    def expired_payload
+      payload[:exp] = Time.now - 100
+    end
+
+    def invalid_issuer_payload
+      payload[:iss] = "invalid_issuer"
+    end
+
+    def expired_iat_payload
+      payload[:iat] = Time.now - 100
     end
   end
 end
