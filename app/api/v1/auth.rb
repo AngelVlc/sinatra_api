@@ -2,7 +2,7 @@ require "json"
 
 module Api
   class V1
-    class Auth < Sinatra::Base
+    class Auth < Api::V1::Base
 
       post "/login" do
         user_name = params[:user_name]
@@ -15,7 +15,7 @@ module Api
           content_type :json
           {token: token}.to_json
         else
-          halt 401
+          return_401("User or password not valid")
         end
       end
     end

@@ -28,6 +28,7 @@ describe "Auth API" do
       post "/login", {user_name: user_name, password: password}
 
       expect(last_response.status).to eq(401)
+      expect(last_response.body).to eq("User or password not valid")
     end
   end
 end

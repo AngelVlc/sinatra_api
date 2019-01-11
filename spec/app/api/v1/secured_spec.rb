@@ -9,9 +9,6 @@ describe "Secure API" do
   let(:password) { "pass" }
 
   context "test" do
-    before(:each) do
-    end
-
     it "should return 200 if the token is valid" do
       valid_token = AuthHelper.valid_token(user_name, ["test"])
 
@@ -26,12 +23,14 @@ describe "Secure API" do
       get "/test"
 
       expect(last_response.status).to eq(401)
+      expect(last_response.body).to eq("A valid token must be passed")
     end
 
     it "should return 401 if the token has not been provided" do
       get "/test"
 
       expect(last_response.status).to eq(401)
+      expect(last_response.body).to eq("A valid token must be passed")
     end
 
     it "should return 403 if the token has expired" do
@@ -43,6 +42,7 @@ describe "Secure API" do
       get "/test"
 
       expect(last_response.status).to eq(403)
+      expect(last_response.body).to eq("The token has expired")
     end
 
     it "should return 403 if the token issuer is not valid" do
@@ -54,6 +54,7 @@ describe "Secure API" do
       get "/test"
 
       expect(last_response.status).to eq(403)
+      expect(last_response.body).to eq("The token does not have a valid issuer")
     end
 
     it "should return 403 if the token iat is not valid" do
@@ -65,6 +66,7 @@ describe "Secure API" do
       get "/test"
 
       expect(last_response.status).to eq(403)
+      expect(last_response.body).to eq("The token does not have a valid 'issued at' time")
     end
 
     def payload
@@ -72,15 +74,21 @@ describe "Secure API" do
     end
 
     def expired_payload
-      payload[:exp] = Time.now - 100
+      result = payload.dup
+      result[:exp] = Time.now - 100
+      result
     end
 
     def invalid_issuer_payload
-      payload[:iss] = "invalid_issuer"
+      result = payload.dup
+      result[:iss] = "invalid_issuer"
+      result
     end
 
     def expired_iat_payload
-      payload[:iat] = Time.now - 100
+      result = payload.dup
+      result[:iat] = Time.now - 100
+      result
     end
   end
 end

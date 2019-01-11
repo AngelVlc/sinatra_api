@@ -15,7 +15,8 @@ describe "Auth service" do
     it "generates a valid token" do
       token = Services::Auth.token(user_name, scopes)
       payload = Services::Auth.decode(token)
-      expect(payload["user"]["user_name"]).to eq(valid_payload[:user][:user_name])
+      puts "GENT", payload
+      expect(payload["user_name"]).to eq(valid_payload[:user_name])
       expect(payload["scopes"]).to eq(valid_payload[:scopes])
     end
 
@@ -25,9 +26,7 @@ describe "Auth service" do
         iat: Time.now.to_i,
         iss: jwt_issuer,
         scopes: scopes,
-        user: {
-          user_name: user_name,
-        },
+        user_name: user_name
       }
     end
   end

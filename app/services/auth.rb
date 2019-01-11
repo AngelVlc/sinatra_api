@@ -9,9 +9,7 @@ module Services
           iat: Time.now.to_i,
           iss: ConfigReader.get(:jwt_issuer),
           scopes: scopes,
-          user: {
-            user_name: user_name
-          }
+          user_name: user_name
         }
       end
 
