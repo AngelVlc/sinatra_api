@@ -9,7 +9,7 @@ describe "Health API" do
   it "status should be true" do
     get "/"
 
-    expect(JSON.parse(last_response.body)).to eq({"status" => true})
+    expect(JSON.parse(last_response.body)).to eq({"status" => true, "env" => "test"})
     expect(last_response.status).to eq(200)
   end
 

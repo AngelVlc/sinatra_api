@@ -10,7 +10,9 @@ run Rack::URLMap.new({
   "/users" => Api::V1::Users
 })
 
-if ENV["RACK_ENV"] == "production"
+environments_with_sentry = ["staging", "production"]
+
+if environments_with_sentry.include?(ENV["RACK_ENV"])
   Raven.configure do |config|
     config.dsn = ConfigReader.get(:sentry_dsn)
   end

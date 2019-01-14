@@ -5,7 +5,7 @@ module Api
     class Health < Sinatra::Base
       get "/" do
         content_type :json
-        {status: true}.to_json
+        {status: true, env: ENV["RACK_ENV"]}.to_json
       end
 
       get "/userscount" do

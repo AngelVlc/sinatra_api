@@ -6,7 +6,7 @@ module Api
     class Base < Sinatra::Base
       helpers Sinatra::CustomLogger
 
-      configure :development, :production do
+      configure :development, :production, :staging do
         logger = Logger.new(STDOUT)
         logger.level = Logger::DEBUG if development?
         set :logger, logger
