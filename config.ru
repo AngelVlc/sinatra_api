@@ -7,7 +7,7 @@ run Rack::URLMap.new({
   "/health" => Api::V1::Health,
   "/auth" => Api::V1::Auth,
   "/secure" => Api::V1::Secure,
-  "/users" => Api::V1::Users
+  "/profile" => Api::V1::Profile
 })
 
 environments_with_sentry = ["staging", "production"]
