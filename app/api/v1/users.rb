@@ -1,6 +1,6 @@
 module Api
   class V1
-    class Users < Api::V1::SecuredBase
+    class Users < Api::SecuredBase
       post "/changepassword" do
         old_password = params[:old_password]
         new_password_1 = params[:new_password_1]
