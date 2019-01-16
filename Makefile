@@ -21,3 +21,6 @@ migrate_dev:
 
 migrate_test:
 	RACK_ENV=test bundle exec rake db:migrate
+
+start:
+	foreman start
