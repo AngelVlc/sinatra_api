@@ -8,7 +8,7 @@ module Api
       if scopes.include?(scope)
         yield req, user.to_sym
       else
-        halt 403
+        return_403("Invalid permissions")
       end
     end
   end

@@ -19,5 +19,9 @@ module Api
     def return_404(message)
       halt [404, {"Content-Type" => "text/plain"}, [message]]
     end
+
+    def return_403(message)
+      halt [403, {"Content-Type" => "text/plain"}, [message]]
+    end
   end
 end
