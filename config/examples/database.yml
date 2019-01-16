@@ -1,0 +1,22 @@
+development: &common_settings
+  adapter: mysql2
+  encoding: utf8
+  collation: utf8_general_ci
+  reconnect: true
+  host: 127.0.0.1
+  database: sinatraapi_dev
+  strict: false
+  pool: 15
+  username: root
+  password: password
+
+test:
+  <<: *common_settings
+  database: sinatraapi_test
+  password: password
+
+staging:
+  <<: *common_settings
+
+production:
+  <<: *common_settings
