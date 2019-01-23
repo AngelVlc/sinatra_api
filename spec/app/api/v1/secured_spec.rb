@@ -6,7 +6,6 @@ describe "Secure API" do
   end
 
   let(:user_name) { "wadus" }
-  let(:password) { "pass" }
 
   context "test" do
     it "should return 200 if the token is valid" do

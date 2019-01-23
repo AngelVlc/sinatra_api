@@ -17,11 +17,21 @@ class User < ActiveRecord::Base
     self.password_digest = @bcrypt_password
   end
 
-  def find_by_user_name(user_name)
-    User.where(user_name: user_name).first
-  end
-
   def scopes_array
     scopes.map { |i| i.name }
+  end
+
+  class << self
+    def find_by_user_name(user_name)
+      User.where(user_name: user_name).first
+    end
+
+    def list
+      User.all.map(&:user_name)
+    end
+
+    def add(user_name, password)
+      User.create!(user_name: user_name, password: password)
+    end
   end
 end

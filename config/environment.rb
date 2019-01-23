@@ -19,6 +19,10 @@ Dir.glob(File.join(APP_ROOT, "app", "api", "v1", "*.rb")).each do |file|
   require file
 end
 
+Dir.glob(File.join(APP_ROOT, "app", "api", "v1", "admin", "*.rb")).each do |file|
+  require file
+end
+
 require "./config/reader.rb"
 
 ConfigReader.read
