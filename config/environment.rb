@@ -11,11 +11,15 @@ APP_ROOT = File.expand_path("..", __dir__)
 Dir.glob(File.join(APP_ROOT, "app", "models", "*.rb")).each { |file| require file }
 Dir.glob(File.join(APP_ROOT, "app", "services", "*.rb")).each { |file| require file }
 
-require "./app/api/v1/base.rb"
-require "./app/api/v1/secured_base.rb"
+require "./app/api/base.rb"
+require "./app/api/secured_base.rb"
 
 Dir.glob(File.join(APP_ROOT, "app", "api", "v1", "*.rb")).each do |file|
-  require file unless file.ends_with?("base.rb") || file.ends_with?("secured_base.rb")
+  require file
+end
+
+Dir.glob(File.join(APP_ROOT, "app", "api", "v1", "admin", "*.rb")).each do |file|
+  require file
 end
 
 require "./config/reader.rb"

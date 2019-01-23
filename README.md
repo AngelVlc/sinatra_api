@@ -14,7 +14,7 @@ bundle install
 
 ## Start
 ```
-foreman start
+make start
 ```
 
 ## Tests

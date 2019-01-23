@@ -1,6 +1,6 @@
 module Api
   class V1
-    class Secure < Api::V1::SecuredBase
+    class Secure < Api::SecuredBase
       get "/test" do
         check_permissions request, "test" do |req, user_name|
           content_type :json

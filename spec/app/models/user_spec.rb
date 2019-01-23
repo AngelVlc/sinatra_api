@@ -46,13 +46,35 @@ describe "User model" do
     end
   end
 
-  context "scopes_array" do
+  context "scopes_array method" do
     it "returns an array with the scopes of the user" do
       user = build(:user)
 
       scopes = user.scopes_array
 
       expect(scopes).to eq(["test"])
+    end
+  end
+
+  context "list method" do
+    it "returns an array with the users" do
+      user1 = User.new(user_name: "user1")
+      user2 = User.new(user_name: "user2")
+
+      allow(User).to receive(:all).and_return([user1, user2])
+
+      result = User.list
+
+      expect(result).to eq(["user1", "user2"])
+    end
+  end
+
+  context "add method" do
+    it "adds a user" do
+
+      allow(User).to receive(:create!).with(user_name: "user", password: "password").and_return(1)
+
+      expect(User.add("user", "password")).to eq(1)
     end
   end
 end

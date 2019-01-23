@@ -6,7 +6,6 @@ describe "Secure API" do
   end
 
   let(:user_name) { "wadus" }
-  let(:password) { "pass" }
 
   context "test" do
     it "should return 200 if the token is valid" do
@@ -67,6 +66,16 @@ describe "Secure API" do
 
       expect(last_response.status).to eq(403)
       expect(last_response.body).to eq("The token does not have a valid 'issued at' time")
+    end
+
+    it "should return 403 if the token is valid but the scope is invalid" do
+      valid_token = AuthHelper.valid_token(user_name, ["wadus"])
+
+      header "Authorization", "Bearer #{valid_token}"
+      get "/test"
+
+      expect(last_response.status).to eq(403)
+      expect(last_response.body).to eq("Invalid permissions")
     end
 
     def payload

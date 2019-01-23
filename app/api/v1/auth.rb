@@ -2,7 +2,7 @@ require "json"
 
 module Api
   class V1
-    class Auth < Api::V1::Base
+    class Auth < Api::Base
 
       post "/login" do
         user_name = params[:user_name]

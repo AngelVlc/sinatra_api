@@ -1,9 +1,9 @@
 require "spec_helper"
 require "json"
 
-describe "Users API" do
+describe "Profile API" do
   def app
-    Api::V1::Users
+    Api::V1::Profile
   end
 
   context "change password when the token is valid" do
