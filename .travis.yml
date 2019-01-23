@@ -33,8 +33,9 @@ jobs:
           - "bundle exec rake db:migrate"
           - "bundle exec rake db:seed"
     - stage: smoke staging
-      language: minimal
-      script: curl -f https://sinatraapi-staging.herokuapp.com/health
+      language: ruby
+      rvm: 2.4
+      script: ruby smoke_test/script.rb https://sinatraapi-staging.herokuapp.com
     - stage: production
       language: minimal
       before_deploy:
@@ -52,5 +53,6 @@ jobs:
           - "bundle exec rake db:migrate"
           - "bundle exec rake db:seed"
     - stage: smoke production
-      language: minimal
-      script: curl -f https://sinatraapi.herokuapp.com/health
+      language: ruby
+      rvm: 2.4
+      script: ruby smoke_test/script.rb https://sinatraapi.herokuapp.com
