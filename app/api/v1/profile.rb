@@ -14,8 +14,6 @@ module Api
 
         found_user.password = new_password_1
 
-        puts found_user.inspect
-
         found_user.save
 
         logger.info "User '#{found_user.user_name}' password changed"
