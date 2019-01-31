@@ -44,7 +44,18 @@ describe "Scope model" do
 
     context "find_by_id" do
       it "finds a scope by id" do
+        scope = double(:scope)
+        allow(Scope).to receive(:where).with(id: 1).and_return([scope])
+        expect(Scope.find_by_id(1)).to eq(scope)
+      end
+    end
 
+    context "list_scopes" do
+      it "returns a list of scopes" do
+        scope1 = double(:scope, id: 1, name: "scope1")
+        scope2 = double(:scope, id: 2, name: "scope2")
+        allow(Scope).to receive(:all).and_return([scope1, scope2])
+        expect(Scope.list_scopes).to eq([{id: 1, name: "scope1"}, {id: 2, name: "scope2"}])
       end
     end
   end

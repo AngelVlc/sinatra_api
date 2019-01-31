@@ -44,6 +44,10 @@ class User < ActiveRecord::Base
       User.where(user_name: user_name).first
     end
 
+    def find_by_id(id)
+      User.where(id: id).first
+    end
+
     def list_users
       User.all.map do |usr|
         {id: usr.id, user_name: usr.user_name}

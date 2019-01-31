@@ -1,5 +1,5 @@
 class Scope < ActiveRecord::Base
-  validates :name, uniqueness: { case_sensitive: false }
+  validates :name, uniqueness: {case_sensitive: false}
   validates_presence_of :name
 
   has_many :permissions
@@ -12,6 +12,16 @@ class Scope < ActiveRecord::Base
 
     def add_scope(name)
       Scope.create!(name: name)
+    end
+
+    def find_by_id(id)
+      Scope.where(id: id).first
+    end
+
+    def list_scopes
+      Scope.all.map do |scope|
+        {id: scope.id, name: scope.name}
+      end
     end
   end
 end

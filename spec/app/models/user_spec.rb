@@ -114,9 +114,9 @@ describe "User model" do
       it "finds a user by id" do
         user = double(:user)
 
-        allow(User).to receive(:find).with(1).and_return(user)
+        allow(User).to receive(:where).with(id: 1).and_return([user])
 
-        expect(User.find(1)).to eq(user)
+        expect(User.find_by_id(1)).to eq(user)
       end
     end
 

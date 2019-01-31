@@ -8,7 +8,8 @@ run Rack::URLMap.new({
   "/auth" => Api::V1::Auth,
   "/secure" => Api::V1::Secure,
   "/profile" => Api::V1::Profile,
-  "/admin/users" => Api::V1::Admin::Users
+  "/admin/users" => Api::V1::Admin::Users,
+  "/admin/sopes" => Api::V1::Admin::Scopes
 })
 
 environments_with_sentry = ["staging", "production"]
