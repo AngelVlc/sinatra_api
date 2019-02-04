@@ -18,7 +18,7 @@ describe "Scope model" do
   end
 
   describe "class" do
-    context "find_by_name" do
+    context "find_by_name method" do
       it "finds a scope by name" do
         scope = double(:scope)
 
@@ -34,7 +34,7 @@ describe "Scope model" do
       end
     end
 
-    context "add_scope" do
+    context "add_scope method" do
       it "adds a scope" do
         expect(Scope).to receive(:create!).with(name: "wadus")
 
@@ -42,7 +42,7 @@ describe "Scope model" do
       end
     end
 
-    context "find_by_id" do
+    context "find_by_id method" do
       it "finds a scope by id" do
         scope = double(:scope)
         allow(Scope).to receive(:where).with(id: 1).and_return([scope])
@@ -50,12 +50,19 @@ describe "Scope model" do
       end
     end
 
-    context "list_scopes" do
+    context "list_scopes method" do
       it "returns a list of scopes" do
         scope1 = double(:scope, id: 1, name: "scope1")
         scope2 = double(:scope, id: 2, name: "scope2")
         allow(Scope).to receive(:all).and_return([scope1, scope2])
         expect(Scope.list_scopes).to eq([{id: 1, name: "scope1"}, {id: 2, name: "scope2"}])
+      end
+    end
+
+    context "delete_scope method" do
+      it "should delete the scope if the scope is not used by any user" do
+        expect(Scope).to receive(:destroy).with(1)
+        Scope.delete_scope(1)
       end
     end
   end

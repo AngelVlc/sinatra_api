@@ -1,10 +1,7 @@
 module Api
   class V1
     class Admin
-      class Scopes < Api::SecuredBase
-        before do
-          check_permissions("admin")
-        end
+      class Scopes < AdminBase
 
         get "/" do
           content_type :json

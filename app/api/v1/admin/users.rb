@@ -1,10 +1,7 @@
 module Api
   class V1
     class Admin
-      class Users < Api::SecuredBase
-        before do
-          check_permissions("admin")
-        end
+      class Users < AdminBase
 
         get "/" do
           content_type :json

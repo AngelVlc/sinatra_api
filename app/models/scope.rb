@@ -23,5 +23,9 @@ class Scope < ActiveRecord::Base
         {id: scope.id, name: scope.name}
       end
     end
+
+    def delete_scope(id)
+      Scope.destroy(id)
+    end
   end
 end
