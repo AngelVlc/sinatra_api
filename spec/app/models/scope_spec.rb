@@ -15,6 +15,18 @@ describe "Scope model" do
 
       expect(another.valid?).to be(false)
     end
+
+    context "list_users method" do
+      it "returns the users who have the scope" do
+        scope = Scope.new
+        user1 = double(:user, id: 1, user_name: "user1")
+        user2 = double(:user, id: 2, user_name: "user2")
+
+        allow(scope).to receive(:users).and_return([user1, user2])
+
+        expect(scope.list_users).to eq([{id: 1, user_name: "user1"}, {id: 2, user_name: "user2"}])
+      end
+    end
   end
 
   describe "class" do

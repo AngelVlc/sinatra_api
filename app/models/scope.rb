@@ -5,6 +5,12 @@ class Scope < ActiveRecord::Base
   has_many :permissions
   has_many :users, through: :permissions, dependent: :destroy
 
+  def list_users
+    users.map do |user|
+      {id: user.id, user_name: user.user_name}
+    end
+  end
+
   class << self
     def find_by_name(name)
       Scope.where(name: name).first

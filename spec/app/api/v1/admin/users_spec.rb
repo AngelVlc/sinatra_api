@@ -8,7 +8,7 @@ describe "Admin users API" do
   let(:user_name) { "wadus" }
 
   context "get '/' lists users" do
-    it "should return a 403 if the user doesn't have permissions" do
+    it "should return a 403 if the logged user doesn't have permissions" do
       valid_token = AuthHelper.valid_token(user_name, ["wadus"])
 
       header "Authorization", "Bearer #{valid_token}"
@@ -17,7 +17,7 @@ describe "Admin users API" do
       expect(last_response.status).to eq(403)
     end
 
-    it "should return the list if the user has permissions" do
+    it "should return the list if the logged user has permissions" do
       valid_token = AuthHelper.valid_token(user_name, ["admin"])
 
       list = [{id: 1, user_name: "user1"}, {id: 2, user_name: "user2"}]
@@ -33,7 +33,7 @@ describe "Admin users API" do
   end
 
   context "post '/' adds a user" do
-    it "should return a 403 if the user doesn't have permissions" do
+    it "should return a 403 if the logged user doesn't have permissions" do
       valid_token = AuthHelper.valid_token(user_name, ["wadus"])
 
       header "Authorization", "Bearer #{valid_token}"
@@ -42,7 +42,7 @@ describe "Admin users API" do
       expect(last_response.status).to eq(403)
     end
 
-    it "should add it if the user has permissions" do
+    it "should add it if the logged user has permissions" do
       valid_token = AuthHelper.valid_token(user_name, ["admin"])
 
       allow(User).to receive(:add_user).with("user", "password").and_return(1)
@@ -55,8 +55,8 @@ describe "Admin users API" do
     end
   end
 
-  context "delete '/' delete a user" do
-    it "should return a 403 if the user doesn't have permissions" do
+  context "delete '/' deletes a user" do
+    it "should return a 403 if the logged user doesn't have permissions" do
       valid_token = AuthHelper.valid_token(user_name, ["wadus"])
 
       header "Authorization", "Bearer #{valid_token}"
@@ -65,7 +65,7 @@ describe "Admin users API" do
       expect(last_response.status).to eq(403)
     end
 
-    it "should delete it if the user has permissions" do
+    it "should delete it if the logged user has permissions" do
       user = double(:user, id: 1)
 
       allow(User).to receive(:find_by_id).with(1).and_return(user)
@@ -80,7 +80,7 @@ describe "Admin users API" do
       expect(JSON.parse(last_response.body)).to eq({"result" => true})
     end
 
-    it "should return a 400 if the user doesn't exists" do
+    it "should return a 400 if the user doesn't exist" do
       valid_token = AuthHelper.valid_token(user_name, ["admin"])
 
       header "Authorization", "Bearer #{valid_token}"
@@ -92,7 +92,7 @@ describe "Admin users API" do
   end
 
   context "get '/:id/scopes' lists scopes of a user" do
-    it "should return a 403 if the user doesn't have permissions" do
+    it "should return a 403 if the logged user doesn't have permissions" do
       valid_token = AuthHelper.valid_token(user_name, ["wadus"])
 
       header "Authorization", "Bearer #{valid_token}"
@@ -111,7 +111,7 @@ describe "Admin users API" do
       expect(last_response.body).to eq("The user doesn't exist")
     end
 
-    it "should return the list if the user has permissions" do
+    it "should return the list if the logged user has permissions" do
       user = double(:user)
       scopes = [{id: 1, name: "scope1"}, {id: 2, name: "scope2"}]
 
@@ -129,7 +129,7 @@ describe "Admin users API" do
   end
 
   context "post '/:id/scopes' adds a scope to the user" do
-    it "should return a 403 if the user doesn't have permissions" do
+    it "should return a 403 if the logged user doesn't have permissions" do
       valid_token = AuthHelper.valid_token(user_name, ["wadus"])
 
       header "Authorization", "Bearer #{valid_token}"
@@ -184,7 +184,7 @@ describe "Admin users API" do
   end
 
   context "delete '/:id_user/scopes/:id_scope' deletes a scope of the user" do
-    it "should return a 403 if the user doesn't have permissions" do
+    it "should return a 403 if the logged user doesn't have permissions" do
       valid_token = AuthHelper.valid_token(user_name, ["wadus"])
 
       header "Authorization", "Bearer #{valid_token}"
@@ -235,7 +235,7 @@ describe "Admin users API" do
       expect(last_response.body).to eq("The user doesn't have the scope")
     end
 
-    it "should delete it if the user has permissions" do
+    it "should delete it if the logged user has permissions" do
       user = double(:user)
       allow(User).to receive(:find_by_id).with(1).and_return(user)
 

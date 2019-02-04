@@ -18,6 +18,8 @@ Dir.glob(File.join(APP_ROOT, "app", "api", "v1", "*.rb")).each do |file|
   require file
 end
 
+require "./app/api/v1/admin/admin_base.rb"
+
 Dir.glob(File.join(APP_ROOT, "app", "api", "v1", "admin", "*.rb")).each do |file|
   require file
 end
